@@ -15,3 +15,11 @@ class ToString a where
 instance ToString Persoana where
   toString (Persoana a b) = "| " ++ a ++ " " ++ show b ++ " |" 
   
+
+instance ToString Bool where
+  toString True = "| True |" 
+  toString False = "| False |" 
+
+banner :: ToString a -> String
+banner = "******" ++ toString ++ "*******"
+
