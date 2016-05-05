@@ -16,6 +16,7 @@
 
     <modules>
         <module>business-logic</module>
+        <module>rest-service</module>
     </modules>
 
     <build>
