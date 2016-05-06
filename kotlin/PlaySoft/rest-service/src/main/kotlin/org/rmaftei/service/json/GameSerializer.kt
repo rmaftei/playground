@@ -1,10 +1,10 @@
-package org.rmaftei.json
+package org.rmaftei.service.json
 
 import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import com.google.gson.JsonSerializationContext
 import com.google.gson.JsonSerializer
-import org.rmaftei.model.game.Game
+import org.rmaftei.service.model.game.Game
 import java.lang.reflect.Type
 
 class GameSerializer: JsonSerializer<Game> {

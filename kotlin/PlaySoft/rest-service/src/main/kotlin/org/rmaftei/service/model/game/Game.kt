@@ -1,4 +1,4 @@
-package org.rmaftei.model.game
+package org.rmaftei.service.model.game
 
 import org.joda.time.DateTime
 

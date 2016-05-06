@@ -1,10 +1,9 @@
-package org.rmaftei
+package org.rmaftei.service
 
-import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import org.rmaftei.json.GameSerializer
-import org.rmaftei.model.game.Game
-import org.rmaftei.services.game.SimpleGameService
+import org.rmaftei.service.json.GameSerializer
+import org.rmaftei.service.model.game.Game
+import org.rmaftei.service.services.game.SimpleGameService
 import spark.Spark.*
 
 val serviceVersion = "/v1"

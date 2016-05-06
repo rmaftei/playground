@@ -1,7 +1,7 @@
-package org.rmaftei.services.game
+package org.rmaftei.service.services.game
 
 import org.joda.time.DateTime
-import org.rmaftei.model.game.Game
+import org.rmaftei.service.model.game.Game
 import java.util.*
 
 class SimpleGameService: GameService {
