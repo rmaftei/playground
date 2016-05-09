@@ -1,32 +1,37 @@
 package org.rmaftei.service.services.game
 
-import org.joda.time.DateTime
 import org.rmaftei.service.model.game.Game
+import org.rmaftei.service.repositories.GameRepository
 import java.util.*
 
-class SimpleGameService: GameService {
-
-    override fun createGame(game: Game) {
-        throw UnsupportedOperationException()
+class SimpleGameService(val gameRepository: GameRepository): GameService {
+    override fun deleteGame(id: String) {
+        gameRepository.deleteGame(id)
     }
 
-    override fun addGame(game: Game) {
-        throw UnsupportedOperationException()
+    override fun getGame(id: String): Game {
+        return gameRepository.findGame(id)
+    }
+
+    override fun createGame(game: Game) {
+        val newGame = game.copy(id = UUID.randomUUID().toString(), createdBy = "admin")
+
+        gameRepository.createGame(newGame)
     }
 
     override fun updateGame(game: Game) {
-        throw UnsupportedOperationException()
-    }
+        val originalGame = gameRepository.findGame(game.id)
 
-    override fun endGame(gameId: String) {
-        throw UnsupportedOperationException()
-    }
+        val updatedGame = originalGame
+                .copy(
+                        location = game.location,
+                        description = game.description,
+                        startTime = game.startTime
+                )
 
+        gameRepository.updateGame(updatedGame)
+    }
     override fun getAllGames(): List<Game> {
-        return listOf(
-                Game("1", DateTime.now(), "Location 1", "description 1", UUID.randomUUID().toString()),
-                Game("2", DateTime.now(), "Location 2", "description 2", UUID.randomUUID().toString()),
-                Game("3", DateTime.now(), "Location 3", "description 3", UUID.randomUUID().toString())
-        )
+        return gameRepository.getAllGames()
     }
 }
