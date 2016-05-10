@@ -2,6 +2,7 @@ package org.rmaftei.service.repositories
 
 import org.joda.time.DateTime
 import org.rmaftei.service.model.game.Game
+import org.rmaftei.service.Maybe
 import java.util.*
 
 class ListGameRepository: GameRepository {
@@ -20,18 +21,30 @@ class ListGameRepository: GameRepository {
     }
 
     override fun updateGame(game: Game) {
-        val gameToRemove = findGame(game.id)
+        val maybeGame = findGame(game.id)
 
-        games = games.minus(gameToRemove).plus(game)
+        if(maybeGame != Maybe.None) {
+            games = games.minus(maybeGame.get()).plus(game)
+        }
     }
 
     override fun deleteGame(gameId: String) {
-        games = games.minus(findGame(gameId))
+        val maybeGame = findGame(gameId)
+
+        if(maybeGame != Maybe.None) {
+            games = games.minus(maybeGame.get())
+        }
     }
 
-    override fun findGame(id: String): Game {
-        return games.filter { game ->
+    override fun findGame(id: String): Maybe<Game> {
+        val found = games.filter { game ->
             game.id == id
-        }[0]
+        }
+
+        if(found.size == 0) {
+            return Maybe.None
+        }
+
+        return Maybe.Just(found[0])
     }
 }
