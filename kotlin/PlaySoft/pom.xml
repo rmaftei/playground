@@ -17,6 +17,7 @@
 
     <modules>
         <module>business-logic</module>
+        <module>event-repository</module>
         <module>rest-service</module>
     </modules>
 
