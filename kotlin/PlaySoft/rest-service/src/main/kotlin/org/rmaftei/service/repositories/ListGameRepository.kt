@@ -1,7 +1,8 @@
 package org.rmaftei.service.repositories
 
 import org.joda.time.DateTime
-import org.rmaftei.service.model.game.Game
+import org.rmaftei.businesslogic.game.domain.Game
+import org.rmaftei.businesslogic.game.repository.GameRepository
 import org.rmaftei.service.Maybe
 import java.util.*
 

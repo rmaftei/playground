@@ -1,6 +1,6 @@
-package org.rmaftei.service.repositories
+package org.rmaftei.businesslogic.game.repository
 
-import org.rmaftei.service.model.game.Game
+import org.rmaftei.businesslogic.game.domain.Game
 import org.rmaftei.service.Maybe
 
 interface GameRepository {
@@ -14,4 +14,5 @@ interface GameRepository {
     fun deleteGame(gameId: String)
 
     fun findGame(id: String): Maybe<Game>
+
 }

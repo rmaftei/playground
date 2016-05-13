@@ -1,10 +1,11 @@
 package org.rmaftei.service.routes.game
 
 import com.google.gson.GsonBuilder
+import org.rmaftei.businesslogic.game.GameApplication
+import org.rmaftei.businesslogic.game.domain.Game as BLGame
 import org.rmaftei.service.json.GameDeserializer
 import org.rmaftei.service.json.GameSerializer
 import org.rmaftei.service.model.game.Game
-import org.rmaftei.service.services.game.GameService
 import spark.Request
 import spark.Response
 import spark.Route
@@ -16,10 +17,17 @@ object GameServiceRoutes {
             .registerTypeAdapter(Game::class.java, GameDeserializer())
             .create()
 
-    class GetAll(private val gameService: GameService) : Route {
+    class GetAll(private val gameApplication: GameApplication) : Route {
         override fun handle(req: Request, res: Response): Any {
             res.type("text/json")
-            return gson.toJson(gameService.getAllGames())
+
+            val games:List<BLGame> = gameApplication.getAllGames();
+
+            val gamesView = games.map { game ->
+                Game(game.id, game.startGame, game.location, game.description, game.createdBy)
+            }
+
+            return gson.toJson(gamesView)
         }
     }
 }
