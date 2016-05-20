@@ -15,9 +15,11 @@ val GAME_PATH = "/games"
 
 val PATH = SERVICE_VERSION.plus(GAME_PATH)
 
+var gameRepository  = ListGameRepository()
+
 fun main(args: Array<String>) {
 
-    val gameApplication = GameApplication(ListGameRepository())
+    val gameApplication = GameApplication(gameRepository)
 
     val gson = GsonBuilder()
             .registerTypeAdapter(Game::class.java, GameSerializer())

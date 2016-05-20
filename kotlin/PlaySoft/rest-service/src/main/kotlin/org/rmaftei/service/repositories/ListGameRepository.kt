@@ -1,17 +1,17 @@
 package org.rmaftei.service.repositories
 
-import org.joda.time.DateTime
 import org.rmaftei.businesslogic.game.domain.Game
 import org.rmaftei.businesslogic.game.repository.GameRepository
 import org.rmaftei.service.Maybe
-import java.util.*
 
 class ListGameRepository: GameRepository {
-    var games = listOf(
-            Game(UUID.randomUUID().toString(), DateTime.now(), "Location 1", "description 1", "admin"),
-            Game(UUID.randomUUID().toString(), DateTime.now(), "Location 2", "description 2", "admin"),
-            Game(UUID.randomUUID().toString(), DateTime.now(), "Location 3", "description 3", "admin")
-    )
+    private var games = emptyList<Game>()
+
+//    var games = listOf(
+//            Game(UUID.randomUUID().toString(), DateTime.now(), "Location 1", "description 1", "admin"),
+//            Game(UUID.randomUUID().toString(), DateTime.now(), "Location 2", "description 2", "admin"),
+//            Game(UUID.randomUUID().toString(), DateTime.now(), "Location 3", "description 3", "admin")
+//    )
 
     override fun getAllGames(): List<Game> {
         return games
