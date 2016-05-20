@@ -9,10 +9,12 @@ import java.util.*
 class GameApplication(private val gameRepository: GameRepository) {
 
 
-    fun createGame(game: Game) {
+    fun createGame(game: Game): Game {
         val newGame = game.copy(id = UUID.randomUUID().toString(), createdBy = "admin")
 
         gameRepository.createGame(newGame)
+
+        return newGame
     }
 
     fun updateGame(game: Game) {

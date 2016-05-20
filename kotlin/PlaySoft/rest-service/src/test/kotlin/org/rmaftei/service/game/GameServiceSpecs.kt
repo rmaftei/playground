@@ -9,6 +9,7 @@ import org.rmaftei.service.json.GameSerializer
 import org.rmaftei.service.model.game.Game
 import org.rmaftei.businesslogic.game.domain.Game as BLGame
 import spark.Spark
+import java.util.*
 import kotlin.test.assertTrue
 
 class GameServiceSpecs : Spek() {
@@ -27,13 +28,13 @@ class GameServiceSpecs : Spek() {
             val URL = "http://localhost:$PORT/$SERVICE_VERSION/$RESOURCE"
 
             org.rmaftei.service.gameRepository.createGame(
-                    BLGame("", DateTime.now(), "Location 1", "Description 1","user 1"))
+                    BLGame(UUID.randomUUID().toString(), DateTime.now(), "Location 1", "Description 1","user 1"))
 
             org.rmaftei.service.gameRepository.createGame(
-                    BLGame("", DateTime.now(), "Location 2", "Description 2","user 2"))
+                    BLGame(UUID.randomUUID().toString(), DateTime.now(), "Location 2", "Description 2","user 2"))
 
             org.rmaftei.service.gameRepository.createGame(
-                    BLGame("", DateTime.now(), "Location 3", "Description 3","user 3"))
+                    BLGame(UUID.randomUUID().toString(), DateTime.now(), "Location 3", "Description 3","user 3"))
 
             org.rmaftei.service.main(emptyArray())
 
@@ -50,6 +51,20 @@ class GameServiceSpecs : Spek() {
 
                 assertTrue(games.size === 3)
             }
+
+            on("Creating a game") {
+                val response = Unirest.post(URL)
+                        .body(gson.toJson(Game("", DateTime.now(), "Location new",  "New Description", "user id")))
+
+                assertTrue(response.asJson().status === 200)
+
+                val newGame = gson.fromJson(response.asJson().body.toString(), Game::class.java)
+
+                assertTrue(newGame !== null)
+                assertTrue(newGame.id.isNotBlank())
+                assertTrue(newGame.createdBy.isNotBlank())
+            }
+
         }
     }
 }

@@ -33,10 +33,13 @@ fun main(args: Array<String>) {
 
         val game  = gson.fromJson(bodyAsString, Game::class.java)
 
-        gameApplication.createGame(BLGame(game.id, game.startTime, game.location, game.description, game.createdBy))
+        val newBLGame =
+                gameApplication
+                        .createGame(BLGame(game.id, game.startTime, game.location, game.description, game.createdBy))
 
         res.type("text/json")
-        gson.toJson(gameApplication.getAllGames())
+
+        gson.toJson(Game(newBLGame.id, newBLGame.startGame, newBLGame.location, newBLGame.description, newBLGame.createdBy))
     })
 
     put(PATH + "/:id") { req, res ->

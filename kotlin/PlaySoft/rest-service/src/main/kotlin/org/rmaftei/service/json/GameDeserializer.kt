@@ -12,11 +12,13 @@ class GameDeserializer: JsonDeserializer<Game> {
         if(null != src) {
             val jsonObject = src.getAsJsonObject()
 
+            val id = jsonObject.get("id").asString
             val startTime = DateTime.parse(jsonObject.get("startTime").asString)
             val location = jsonObject.get("location").asString
             val description = jsonObject.get("description").asString
+            val createdBy = jsonObject.get("createdBy").asString
 
-            return Game("", startTime, location, description, "")
+            return Game(id, startTime, location, description, createdBy)
         }
 
         return null

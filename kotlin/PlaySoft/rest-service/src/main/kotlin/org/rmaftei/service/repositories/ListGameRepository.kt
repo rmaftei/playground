@@ -7,12 +7,6 @@ import org.rmaftei.service.Maybe
 class ListGameRepository: GameRepository {
     private var games = emptyList<Game>()
 
-//    var games = listOf(
-//            Game(UUID.randomUUID().toString(), DateTime.now(), "Location 1", "description 1", "admin"),
-//            Game(UUID.randomUUID().toString(), DateTime.now(), "Location 2", "description 2", "admin"),
-//            Game(UUID.randomUUID().toString(), DateTime.now(), "Location 3", "description 3", "admin")
-//    )
-
     override fun getAllGames(): List<Game> {
         return games
     }
