@@ -17,21 +17,21 @@ val PATH = SERVICE_VERSION.plus(GAME_PATH)
 
 var gameRepository  = ListGameRepository()
 
+val JSON_ENGINE = GsonBuilder()
+        .registerTypeAdapter(Game::class.java, GameSerializer())
+        .registerTypeAdapter(Game::class.java, GameDeserializer())
+        .create()
+
 fun main(args: Array<String>) {
 
     val gameApplication = GameApplication(gameRepository)
-
-    val gson = GsonBuilder()
-            .registerTypeAdapter(Game::class.java, GameSerializer())
-            .registerTypeAdapter(Game::class.java, GameDeserializer())
-            .create()
 
     get(PATH, GameServiceRoutes.GetAll(gameApplication))
 
     post(PATH, { req, res ->
         val bodyAsString = req.body()
 
-        val game  = gson.fromJson(bodyAsString, Game::class.java)
+        val game  = JSON_ENGINE.fromJson(bodyAsString, Game::class.java)
 
         val newBLGame =
                 gameApplication
@@ -39,7 +39,7 @@ fun main(args: Array<String>) {
 
         res.type("text/json")
 
-        gson.toJson(Game(newBLGame.id, newBLGame.startGame, newBLGame.location, newBLGame.description, newBLGame.createdBy))
+        JSON_ENGINE.toJson(Game(newBLGame.id, newBLGame.startGame, newBLGame.location, newBLGame.description, newBLGame.createdBy))
     })
 
     put(PATH + "/:id") { req, res ->
@@ -47,7 +47,7 @@ fun main(args: Array<String>) {
 
         val bodyAsString = req.body()
 
-        val game  = gson.fromJson(bodyAsString, Game::class.java)
+        val game  = JSON_ENGINE.fromJson(bodyAsString, Game::class.java)
 
         val gametoUpdate = game.copy(id = gameId)
 
@@ -56,7 +56,7 @@ fun main(args: Array<String>) {
                         gametoUpdate.description, gametoUpdate.createdBy))
 
         res.type("text/json")
-        gson.toJson(gameApplication.getAllGames())
+        JSON_ENGINE.toJson(gameApplication.getAllGames())
     }
 
     delete(PATH + "/:id") { req, res ->
@@ -65,7 +65,7 @@ fun main(args: Array<String>) {
         gameApplication.deleteGame(idGame)
 
         res.type("text/json")
-        gson.toJson(gameApplication.getAllGames())
+        JSON_ENGINE.toJson(gameApplication.getAllGames())
     }
 
 }
