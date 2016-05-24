@@ -2,22 +2,22 @@ package org.rmaftei.businesslogic.game
 
 import org.rmaftei.businesslogic.game.domain.Game
 import org.rmaftei.businesslogic.game.repository.GameRepository
+import org.rmaftei.businesslogic.game.util.RecordDoesNotExists
 import org.rmaftei.service.Maybe
 import java.util.*
 
 
 class GameApplication(private val gameRepository: GameRepository) {
 
-
     fun createGame(game: Game): Game {
-        val newGame = game.copy(id = UUID.randomUUID().toString(), createdBy = "admin")
+        val newGame = game.copy(id = UUID.randomUUID().toString())
 
         gameRepository.createGame(newGame)
 
         return newGame
     }
 
-    fun updateGame(game: Game) {
+    fun updateGame(game: Game): Game {
         val originalGame = gameRepository.findGame(game.id)
 
         if(originalGame != Maybe.None) {
@@ -28,8 +28,10 @@ class GameApplication(private val gameRepository: GameRepository) {
                             startGame = game.startGame
                     )
 
-            gameRepository.updateGame(updatedGame)
+            return gameRepository.updateGame(updatedGame)
         }
+
+        throw RecordDoesNotExists.Game(game.id)
     }
 
     fun deleteGame(gameId: String) {

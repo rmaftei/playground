@@ -7,9 +7,9 @@ interface GameRepository {
 
     fun getAllGames(): List<Game>
 
-    fun createGame(game: Game)
+    fun createGame(game: Game): Game
 
-    fun updateGame(game: Game)
+    fun updateGame(game: Game): Game
 
     fun deleteGame(gameId: String)
 

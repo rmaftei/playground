@@ -11,16 +11,20 @@ class ListGameRepository: GameRepository {
         return games
     }
 
-    override fun createGame(game: Game) {
+    override fun createGame(game: Game):Game {
         games = games.plus(game)
+
+        return game
     }
 
-    override fun updateGame(game: Game) {
+    override fun updateGame(game: Game):Game {
         val maybeGame = findGame(game.id)
 
         if(maybeGame != Maybe.None) {
             games = games.minus(maybeGame.get()).plus(game)
         }
+
+        return game
     }
 
     override fun deleteGame(gameId: String) {
