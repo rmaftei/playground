@@ -76,7 +76,7 @@ class GameApplicationTest {
 
     @Test(expected = RecordDoesNotExists.Game::class)
     fun test_update_game_that_does_not_exists() {
-        `when`(repositoryMock.findGame("1")).then {
+        `when`(repositoryMock.findGame(predefinedId)).then {
             Maybe.None
         }
 
