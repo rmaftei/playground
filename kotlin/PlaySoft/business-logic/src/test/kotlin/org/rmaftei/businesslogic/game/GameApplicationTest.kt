@@ -5,7 +5,7 @@ import org.joda.time.DateTime
 import org.junit.Test
 import org.mockito.Mockito.*
 import org.rmaftei.businesslogic.game.domain.Game
-import org.rmaftei.businesslogic.game.repository.GameRepository
+import org.rmaftei.businesslogic.game.port.GameRepository
 import org.rmaftei.businesslogic.game.util.RecordDoesNotExists
 import org.rmaftei.service.Maybe
 import kotlin.test.assertNotNull

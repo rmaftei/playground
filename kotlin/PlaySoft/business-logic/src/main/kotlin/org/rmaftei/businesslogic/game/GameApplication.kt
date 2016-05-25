@@ -1,7 +1,7 @@
 package org.rmaftei.businesslogic.game
 
 import org.rmaftei.businesslogic.game.domain.Game
-import org.rmaftei.businesslogic.game.repository.GameRepository
+import org.rmaftei.businesslogic.game.port.GameRepository
 import org.rmaftei.businesslogic.game.util.RecordDoesNotExists
 import org.rmaftei.service.Maybe
 import java.util.*
