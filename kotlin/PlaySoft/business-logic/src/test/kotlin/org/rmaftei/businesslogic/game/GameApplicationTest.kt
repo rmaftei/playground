@@ -3,9 +3,10 @@ package org.rmaftei.businesslogic.game
 
 import org.joda.time.DateTime
 import org.junit.Test
-import org.mockito.Mockito.*
+import org.mockito.Mockito.`when`
+import org.mockito.Mockito.mock
 import org.rmaftei.businesslogic.game.domain.Game
-import org.rmaftei.businesslogic.game.port.GameRepository
+import org.rmaftei.businesslogic.game.port.GamesPort
 import org.rmaftei.businesslogic.game.util.RecordDoesNotExists
 import org.rmaftei.service.Maybe
 import kotlin.test.assertNotNull
@@ -13,7 +14,7 @@ import kotlin.test.assertTrue
 
 class GameApplicationTest {
 
-    val repositoryMock = mock(GameRepository::class.java)
+    val repositoryMock = mock(GamesPort::class.java)
 
     val gameApplication = GameApplication(repositoryMock)
 

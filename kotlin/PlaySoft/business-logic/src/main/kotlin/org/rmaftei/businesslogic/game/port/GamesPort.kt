@@ -3,7 +3,7 @@ package org.rmaftei.businesslogic.game.port
 import org.rmaftei.businesslogic.game.domain.Game
 import org.rmaftei.service.Maybe
 
-interface GameRepository {
+interface GamesPort {
 
     fun getAllGames(): List<Game>
 

@@ -1,16 +1,14 @@
 package org.rmaftei.service.game
 
-import com.google.gson.GsonBuilder
 import com.mashape.unirest.http.Unirest
 import org.jetbrains.spek.api.Spek
 import org.joda.time.DateTime
-import org.rmaftei.service.json.GameDeserializer
-import org.rmaftei.service.json.GameSerializer
 import org.rmaftei.service.model.game.Game
-import org.rmaftei.businesslogic.game.domain.Game as BLGame
+import org.rmaftei.service.repositories.ListGameRepository
 import spark.Spark
 import java.util.*
 import kotlin.test.assertTrue
+import org.rmaftei.businesslogic.game.domain.Game as BLGame
 
 class GameServiceSpecs : Spek() {
 
@@ -24,13 +22,15 @@ class GameServiceSpecs : Spek() {
 
             val URL = "http://localhost:$PORT/$SERVICE_VERSION/$RESOURCE"
 
-            org.rmaftei.service.gameRepository.createGame(
+            org.rmaftei.service.gamesPort = ListGameRepository()
+
+            org.rmaftei.service.gamesPort.createGame(
                     BLGame(UUID.randomUUID().toString(), DateTime.now(), "Location 1", "Description 1", "user 1"))
 
-            org.rmaftei.service.gameRepository.createGame(
+            org.rmaftei.service.gamesPort.createGame(
                     BLGame(UUID.randomUUID().toString(), DateTime.now(), "Location 2", "Description 2", "user 2"))
 
-            org.rmaftei.service.gameRepository.createGame(
+            org.rmaftei.service.gamesPort.createGame(
                     BLGame(UUID.randomUUID().toString(), DateTime.now(), "Location 3", "Description 3", "user 3"))
 
             org.rmaftei.service.main(emptyArray())

@@ -1,10 +1,10 @@
 package org.rmaftei.service.repositories
 
 import org.rmaftei.businesslogic.game.domain.Game
-import org.rmaftei.businesslogic.game.port.GameRepository
+import org.rmaftei.businesslogic.game.port.GamesPort
 import org.rmaftei.service.Maybe
 
-class ListGameRepository: GameRepository {
+class ListGameRepository: GamesPort {
     private var games = emptyList<Game>()
 
     override fun getAllGames(): List<Game> {

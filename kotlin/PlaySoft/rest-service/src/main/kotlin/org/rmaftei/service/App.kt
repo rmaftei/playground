@@ -1,21 +1,22 @@
 package org.rmaftei.service
 
 import com.google.gson.GsonBuilder
+import org.rmaftei.adapters.SimpleMongoDBAdapter
 import org.rmaftei.businesslogic.game.GameApplication
-import org.rmaftei.businesslogic.game.domain.Game as BLGame
+import org.rmaftei.businesslogic.game.port.GamesPort
 import org.rmaftei.service.json.GameDeserializer
 import org.rmaftei.service.json.GameSerializer
 import org.rmaftei.service.model.game.Game
-import org.rmaftei.service.repositories.ListGameRepository
 import org.rmaftei.service.routes.game.GameServiceRoutes
 import spark.Spark.*
+import org.rmaftei.businesslogic.game.domain.Game as BLGame
 
 val SERVICE_VERSION = "/v1"
 val GAME_PATH = "/games"
 
 val PATH = SERVICE_VERSION.plus(GAME_PATH)
 
-var gameRepository  = ListGameRepository()
+var gamesPort: GamesPort = SimpleMongoDBAdapter()
 
 val JSON_ENGINE = GsonBuilder()
         .registerTypeAdapter(Game::class.java, GameSerializer())
@@ -24,7 +25,7 @@ val JSON_ENGINE = GsonBuilder()
 
 fun main(args: Array<String>) {
 
-    val gameApplication = GameApplication(gameRepository)
+    val gameApplication = GameApplication(gamesPort)
 
     get(PATH, GameServiceRoutes.GetAll(gameApplication))
 
