@@ -7,6 +7,7 @@ import org.joda.time.DateTime
 import org.rmaftei.businesslogic.game.domain.Game
 import org.rmaftei.businesslogic.game.port.GamesPort
 import org.rmaftei.service.Maybe
+import java.util.*
 
 class SimpleMongoDBAdapter(address:String = "localhost", port: Int = 27017, database: String = "playsoft"): GamesPort {
 
@@ -27,7 +28,7 @@ class SimpleMongoDBAdapter(address:String = "localhost", port: Int = 27017, data
     override fun createGame(game: Game): Game {
         val newGame = Document()
                 .append("id", game.id)
-                .append("startGame", game.startGame)
+                .append("startGame", Date(game.startGame.getMillis()))
                 .append("location", game.location)
                 .append("description", game.description)
                 .append("createdBy", game.createdBy)
@@ -51,7 +52,7 @@ class SimpleMongoDBAdapter(address:String = "localhost", port: Int = 27017, data
     }
 
     override fun deleteGame(gameId: String) {
-        coll.deleteOne(BasicDBObject("_id", gameId))
+        coll.deleteOne(BasicDBObject("id", gameId))
     }
 
     override fun findGame(id: String): Maybe<Game> {

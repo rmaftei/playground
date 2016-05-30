@@ -3,8 +3,8 @@ package org.rmaftei.service.game
 import com.mashape.unirest.http.Unirest
 import org.jetbrains.spek.api.Spek
 import org.joda.time.DateTime
+import org.rmaftei.adapters.SimpleMongoDBAdapter
 import org.rmaftei.service.model.game.Game
-import org.rmaftei.service.repositories.ListGameRepository
 import spark.Spark
 import java.util.*
 import kotlin.test.assertTrue
@@ -22,7 +22,11 @@ class GameServiceSpecs : Spek() {
 
             val URL = "http://localhost:$PORT/$SERVICE_VERSION/$RESOURCE"
 
-            org.rmaftei.service.gamesPort = ListGameRepository()
+            org.rmaftei.service.gamesPort = SimpleMongoDBAdapter()
+
+            org.rmaftei.service.gamesPort.getAllGames().forEach { game ->
+                org.rmaftei.service.gamesPort.deleteGame(game.id)
+            }
 
             org.rmaftei.service.gamesPort.createGame(
                     BLGame(UUID.randomUUID().toString(), DateTime.now(), "Location 1", "Description 1", "user 1"))
