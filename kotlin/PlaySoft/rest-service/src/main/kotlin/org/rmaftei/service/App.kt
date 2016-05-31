@@ -27,6 +27,8 @@ fun main(args: Array<String>) {
 
     val gameApplication = GameApplication(gamesPort)
 
+    val currentUser = "currentUser"
+
     get(PATH, GameServiceRoutes.GetAll(gameApplication))
 
     post(PATH, { req, res ->
@@ -36,7 +38,7 @@ fun main(args: Array<String>) {
 
         val newBLGame =
                 gameApplication
-                        .createGame(BLGame(game.id, game.startTime, game.location, game.description, game.createdBy))
+                        .createGame(BLGame(game.id, game.startTime, game.location, game.description, currentUser))
 
         res.type("text/json")
 
@@ -54,7 +56,7 @@ fun main(args: Array<String>) {
 
         gameApplication.updateGame(
                 BLGame(gametoUpdate.id, gametoUpdate.startTime, gametoUpdate.location,
-                        gametoUpdate.description, gametoUpdate.createdBy))
+                        gametoUpdate.description, currentUser))
 
         res.type("text/json")
         JSON_ENGINE.toJson(gameApplication.getAllGames())
