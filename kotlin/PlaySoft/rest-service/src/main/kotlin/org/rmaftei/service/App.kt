@@ -1,9 +1,9 @@
 package org.rmaftei.service
 
 import com.google.gson.GsonBuilder
-import org.rmaftei.adapters.SimpleMongoDBAdapter
 import org.rmaftei.businesslogic.game.GameApplication
 import org.rmaftei.businesslogic.game.port.GamesPort
+import org.rmaftei.service.adapter.SimpleMongoDBAdapter
 import org.rmaftei.service.json.GameDeserializer
 import org.rmaftei.service.json.GameSerializer
 import org.rmaftei.service.model.game.Game

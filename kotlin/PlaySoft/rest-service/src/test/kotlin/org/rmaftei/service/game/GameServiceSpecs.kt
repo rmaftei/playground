@@ -3,7 +3,7 @@ package org.rmaftei.service.game
 import com.mashape.unirest.http.Unirest
 import org.jetbrains.spek.api.Spek
 import org.joda.time.DateTime
-import org.rmaftei.adapters.SimpleMongoDBAdapter
+import org.rmaftei.service.adapter.SimpleMongoDBAdapter
 import org.rmaftei.service.model.game.Game
 import spark.Spark
 import java.util.*
