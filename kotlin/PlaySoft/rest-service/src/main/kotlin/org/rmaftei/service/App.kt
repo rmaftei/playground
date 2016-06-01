@@ -1,6 +1,7 @@
 package org.rmaftei.service
 
 import com.google.gson.GsonBuilder
+import org.joda.time.DateTime
 import org.rmaftei.businesslogic.game.GameApplication
 import org.rmaftei.businesslogic.game.port.GamesPort
 import org.rmaftei.service.adapter.SimpleMongoDBAdapter
@@ -33,14 +34,14 @@ fun main(args: Array<String>) {
 
     val currentUser = "currentUser"
 
-    val users = mapOf(
+    val usersAndPasswords = mapOf(
             "user1" to "7c6a180b36896a0a8c02787eeafb0e4c",
             "user2" to "6cb75f652a9b52798eb6cf2201057c73")
 
-    val tokens = mutableMapOf("" to "")
+    val tokens = mutableMapOf<String, Pair<String, DateTime>>()
 
     before { req, resp ->
-        if(!req.pathInfo().equals("/v1/auth")) {
+        if(!req.pathInfo().equals("/v1/login")) {
 
             if(null == req.headers("Authorization")) {
                 halt(401, "User authorization")
@@ -48,26 +49,42 @@ fun main(args: Array<String>) {
 
             val token:String = req.headers("Authorization").replace("Bearer ", "").replace("OAuth2 ", "")
 
-            if(!tokens.containsValue(token)) {
+            val notValid = tokens.filterValues { value ->
+                value.first.equals(token)
+            }.isEmpty()
+
+            if(notValid) {
                 halt(401, "User authorization")
             }
         }
     }
 
-    post(SERVICE_VERSION + "/auth", { req, res ->
+    post(SERVICE_VERSION + "/login", { req, res ->
         val bodyAsString = req.body()
 
         val credentials = JSON_ENGINE.fromJson(bodyAsString, Credentials::class.java)
 
-        if(users[credentials.username].equals(credentials.password)) {
+        if(usersAndPasswords[credentials.username].equals(credentials.password)) {
             val token = UUID.randomUUID().toString().replace("-", "")
 
-            tokens.put(credentials.username, token)
+            tokens.put(credentials.username, Pair(token, DateTime.now()))
 
             token
         } else {
             halt(401, "Wrong username/password")
         }
+    })
+
+    post(SERVICE_VERSION + "/logout", { req, res ->
+        val tokenAuth:String = req.headers("Authorization").replace("Bearer ", "").replace("OAuth2 ", "")
+
+        tokens.values.removeAll { token ->
+            token.first.equals(tokenAuth)
+        }
+
+        res.status(200)
+
+        true
     })
 
     get(PATH, GameServiceRoutes.GetAll(gameApplication))
