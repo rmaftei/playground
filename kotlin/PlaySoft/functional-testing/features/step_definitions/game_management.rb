@@ -3,9 +3,26 @@
 require 'rest-client'
 require 'json'
 require 'rspec'
+:
+
+When(/^I access authenticate as "([^\"]*)\/([^\"]*)"$/) do |username, password|
+	begin
+	    response = RestClient.get "http://localhost:8080/v1/games"
+	    expect(response.code).to eq(200)
+	rescue RestClient::InternalServerError => e
+        STDERR.puts (e.methods)
+        throw e
+    end
+end
 
 When(/^I insert a game with start time "([^"]*)" and location "([^"]*)"$/) do |arg1, arg2|
-	expect(true).to eq(false)
+	begin
+	    response = RestClient.get "http://localhost:8080/v1/games"
+	    expect(response.code).to eq(200)
+	rescue RestClient::InternalServerError => e
+        STDERR.puts (e.methods)
+        throw e
+    end
 end
 
 Then(/^I have (\d+) game$/) do |arg1|
