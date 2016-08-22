@@ -49,6 +49,7 @@ var nav = [{
 
 var booksRouter = require("./src/routes/bookRoutes")(nav, pool);
 var adminRouter = require("./src/routes/adminRoutes")(nav, pool);
+var authRouter = require("./src/routes/authRoutes")();
 
 var bodyparser = require("body-parser");
 
@@ -63,6 +64,7 @@ app.set("view engine", "ejs");
 
 app.use("/books", booksRouter);
 app.use("/books/admin", adminRouter);
+app.use("/auth", authRouter);
 
 app.get("/", function(req, res) {
     res.render("index", {
