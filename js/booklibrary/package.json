@@ -12,11 +12,15 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.15.2",
+    "cookie-parser": "^1.4.3",
     "ejs": "^2.5.1",
     "express": "^4.14.0",
     "express-handlebars": "^3.0.0",
+    "express-session": "^1.14.0",
     "jade": "^1.11.0",
     "node-uuid": "^1.4.7",
+    "passport": "^0.3.2",
+    "passport-local": "^1.0.0",
     "pg": "^6.0.3",
     "pg-pool": "^1.4.0"
   },

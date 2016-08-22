@@ -1,4 +1,8 @@
 var express = require("express");
+var bodyparser = require("body-parser");
+var cookieParser = require("cookie-parser");
+var passport = require("passport");
+var session = require("express-session");
 
 var port = process.env.PORT || 8080;
 
@@ -51,7 +55,6 @@ var booksRouter = require("./src/routes/bookRoutes")(nav, pool);
 var adminRouter = require("./src/routes/adminRoutes")(nav, pool);
 var authRouter = require("./src/routes/authRoutes")();
 
-var bodyparser = require("body-parser");
 
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({
@@ -59,6 +62,11 @@ app.use(bodyparser.urlencoded({
 }));
 
 app.use(express.static("public"));
+app.use(cookieParser());
+app.use(session({secret: "library"}));
+
+require("./src/config/passport")(app);
+
 app.set("views", "./src/views");
 app.set("view engine", "ejs");
 
