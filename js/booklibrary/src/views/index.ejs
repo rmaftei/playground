@@ -103,13 +103,27 @@
           <div class="row">    
             <br>
             <div class="col-md-2 col-sm-3 text-center">
+              Sign up           
+            </div>
+            <div class="col-md-3 col-sm-9">
+              <form name="signUpForm" action="/auth/signUp" method="post">
+                <input type="text" name="username">
+                <input type="password" name="password">
+                <input type="submit" value="Sign up">
+              </form>
+            </div>
+          </div>
+
+            <div class="row">    
+            <br>
+            <div class="col-md-2 col-sm-3 text-center">
               Sign in             
             </div>
-            <div class="col-md-10 col-sm-9">
-              <form name="signUpForm" action="/auth/signUp" method="post">
-                <input type="text" id="userName" name="username">
-                <input type="password" id="password" name="password">
-                <input type="submit" value="Sign up">
+            <div class="col-md-3 col-sm-9">
+              <form name="signInForm" action="/auth/signIn" method="post">
+                <input type="text" name="username">
+                <input type="password" name="password">
+                <input type="submit" value="Sign in">
               </form>
             </div>
           </div>

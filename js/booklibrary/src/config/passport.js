@@ -1,18 +1,25 @@
 var passport = require("passport");
 
-var config =function(app) {
+var config = function(app, pool) {
+
+	var _passport = passport;
+
 	app.use(passport.initialize());
 	app.use(passport.session());
 
 	passport.serializeUser(function(user, done) {
-		done(null, user.id);
-	});
+		console.log("serializeUser");
 
-	passport.deserializeUser(function(userId, done) {
 		done(null, user);
 	});
 
-	require("./strategies/local.strategy");
+	passport.deserializeUser(function(user, done) {
+		console.log("deserializeUser");
+
+		done(null, user);
+	});
+
+	require("./strategies/local.strategy")(pool);
 };
 
 module.exports = config;

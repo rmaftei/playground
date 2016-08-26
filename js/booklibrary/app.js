@@ -23,27 +23,27 @@ var config = {
 
 var pool = new Pool(config);
 
-pool.connect(function(err, client, done) {
-	if(err) {
-		console.error("error fetching client from pool", err);
-	}
+// pool.connect(function(err, client, done) {
+// 	if(err) {
+// 		console.error("error fetching client from pool", err);
+// 	}
 
-	client.query("SELECT $1::int AS number",["1"], function(err, result) {
-		if(err) throw err;
+// 	client.query("SELECT $1::int AS number",["1"], function(err, result) {
+// 		if(err) throw err;
 
-		done();
+// 		done();
 
-		console.log(result.rows[0]);
+// 		console.log(result.rows[0]);
 
-		client.end(function(err) {
-			if(err) throw err;
-		});
-	});
-});
+// 		client.end(function(err) {
+// 			if(err) throw err;
+// 		});
+// 	});
+// });
 
-pool.on("error", function(err, client) {
-	console.log("idle client error", err.message, err.stack);
-});
+// pool.on("error", function(err, client) {
+// 	console.log("idle client error", err.message, err.stack);
+// });
 
 var nav = [{
             	link: "/books", text:"Books"
@@ -53,7 +53,7 @@ var nav = [{
 
 var booksRouter = require("./src/routes/bookRoutes")(nav, pool);
 var adminRouter = require("./src/routes/adminRoutes")(nav, pool);
-var authRouter = require("./src/routes/authRoutes")();
+var authRouter = require("./src/routes/authRoutes")(pool);
 
 
 app.use(bodyparser.json());
@@ -65,7 +65,7 @@ app.use(express.static("public"));
 app.use(cookieParser());
 app.use(session({secret: "library"}));
 
-require("./src/config/passport")(app);
+require("./src/config/passport")(app, pool);
 
 app.set("views", "./src/views");
 app.set("view engine", "ejs");

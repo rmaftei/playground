@@ -12,7 +12,7 @@ var router = function(nav, pool) {
 
                 client.query("SELECT * FROM carti", function(err, result) {
                     if(err) {
-                        console.err("error", err);
+                        console.error("error", err);
                     }
 
                     done();
@@ -38,7 +38,7 @@ var router = function(nav, pool) {
 
                 client.query("SELECT * FROM carti WHERE id=$1", [id], function(err, result) {
                     if(err) {
-                        console.err("error", err);
+                        console.error("error", err);
                     }
 
                     done();
