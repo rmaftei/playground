@@ -1,6 +1,6 @@
 var passport = require("passport");
 
-var config = function(app, pool) {
+var config = function(app) {
 
 	var _passport = passport;
 
@@ -19,7 +19,7 @@ var config = function(app, pool) {
 		done(null, user);
 	});
 
-	require("./strategies/local.strategy")(pool);
+	require("./strategies/local.strategy")();
 };
 
 module.exports = config;

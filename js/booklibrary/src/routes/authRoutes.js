@@ -6,34 +6,23 @@ var passport = require("passport");
 
 var authRouter = express.Router();
 
+var userRepository = require("../repository/userRepository");
+
 var router = function(pool) {
 	authRouter.route("/signUp")
 		.post(function(req, res) {
 
 			var signUpData = req.body;
 			
-			pool.connect(function(err, client, done) {
-	            if(err) {
-	                console.error("error", err);
-	            }
-
-	            var generatedId = uuidGenerator.v4();
-
-	            client.query("INSERT INTO utilizatori VALUES($1, $2, $3)", 
-	            	[generatedId, signUpData.username, signUpData.password], 
-	            	function(err, result) {
-		                if(err) {
-		                    console.error("error", err);
-		                }
-
-		                done();
-
-	                    req.login(req.body, function() {
-							res.redirect("/auth/profile");
-						});
-	            });
-	        });		
-			
+			userRepository.insert(signUpData, function(saved) {
+				if(saved) {
+					req.login(req.body, function() {
+	                	res.redirect("/auth/profile");
+	                });
+				} else {
+					res.redirect("/");
+				}	
+			});
 		});
 
 	authRouter.route("/signIn")
