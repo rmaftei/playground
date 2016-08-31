@@ -37,10 +37,15 @@ app.use("/books/admin", adminRouter);
 app.use("/auth", authRouter);
 
 app.get("/", function(req, res) {
-    res.render("index", {
+
+    if(req.user) {
+        res.redirect("/books");
+    } else {
+        res.render("index", {
             title: "Hello from EJS", 
             nav: nav
-        });
+        });    
+    }
 });
 
 app.listen(port, function(req, res) {

@@ -8,6 +8,9 @@ var authRouter = express.Router();
 
 var userRepository = require("../repository/userRepository");
 
+
+var pathAfterLogin = "/books";
+
 var router = function(pool) {
 	authRouter.route("/signUp")
 		.post(function(req, res) {
@@ -17,7 +20,7 @@ var router = function(pool) {
 			userRepository.insert(signUpData, function(saved) {
 				if(saved) {
 					req.login(req.body, function() {
-	                	res.redirect("/auth/profile");
+	                	res.redirect(pathAfterLogin);
 	                });
 				} else {
 					res.redirect("/");
@@ -29,7 +32,7 @@ var router = function(pool) {
 		.post(passport.authenticate("local", {
 			failureRedirect: "/"
 		}), function(req, res) {
-			res.redirect("/auth/profile");
+			res.redirect(pathAfterLogin);
 		});
 
 	authRouter.route("/profile")
