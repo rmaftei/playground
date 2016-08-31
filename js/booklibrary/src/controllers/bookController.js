@@ -16,11 +16,16 @@ var bookController = function(bookService, nav) {
      	var id = req.params.id;
 
         bookRepository.getById(id, function(book) {
-        	res.render("book", {
-                title: "Book", 
-                nav: nav,
-                book: book
-            });
+        	bookService.getBookById(book.isbn, function(error, description) {
+        		
+        		book.description = description;
+
+	        	res.render("book", {
+	                title: "Book", 
+	                nav: nav,
+	                book: book
+	            });	
+        	});
         });
     };
 
