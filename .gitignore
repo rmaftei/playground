@@ -1,0 +1,12 @@
+*.xml
+*.class
+*.bin
+*.properties
+*.lock
+*.gitkeep
+*.editorconfig
+*.kotlin_module
+*.name
+*.bat
+*.jar
+kotlin/PlayKotlin/gradlew
